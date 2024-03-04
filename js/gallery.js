@@ -69,9 +69,9 @@ const containerGallery = document.querySelector(".gallery");
 const pictures = images
   .map(
     ({ preview, original, description }) =>
-      `<li class = gallery-item>
-      <a class = gallery-link href = ${original}>
-      <img class = gallery-image src= ${preview} data-source = ${original} alt = ${description}/>
+      `<li class="gallery-item">
+      <a class="gallery-link" href ="${original}">
+      <img class="gallery-image" src="${preview}" data-source="${original}" alt="${description}"/>
       </a>
     </li>`
   )
@@ -79,21 +79,25 @@ const pictures = images
 containerGallery.insertAdjacentHTML("beforeend", pictures);
 
 const itemGalerry = document.querySelectorAll(".gallery-item");
-containerGallery.addEventListener("click", handleClick);
-function handleClick(event) {
+containerGallery.addEventListener("click", handleModalOpen);
+function handleModalOpen(event) {
   event.target;
   event.preventDefault();
-  if (event.currentTarget === event.target) {
-    return;
-  }
+  if (event.currentTarget === event.target) return;
 
   console.log(event.target.dataset.source);
 
   const instance = basicLightbox.create(`
     <div class="modal">
-       <img class = modal-img src = ${event.target.dataset.source} width="800" height="600"/>
+       <img class="modal-img" src="${event.target.dataset.source}" width="1112" height="640"/>
     </div>
 `);
 
   instance.show();
+
+  const imgModalGallery = document.querySelector(".modal-img");
+  imgModalGallery.addEventListener("click", handleModalClose);
+  function handleModalClose(event) {
+    instance.close();
+  }
 }
